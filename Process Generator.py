@@ -2,7 +2,10 @@ import numpy as np
 
 inp_arr = []
 
-with open('input.txt', "r") as inp:
+inputfile = input()
+outputfile = input()
+
+with open(inputfile, "r") as inp:
     inp_arr = inp.read().split()
 
 num = int(inp_arr[0]) #number of processes
@@ -12,7 +15,7 @@ mean_burst = float(inp_arr[3])
 sigma_burst = float(inp_arr[4])
 mean_prior = float(inp_arr[5])
 
-with open('output.txt', "w") as outp:
+with open(outputfile, "w") as outp:
     outp.write(str(num))
     outp.write('\n')
     for i in range (0, num):
