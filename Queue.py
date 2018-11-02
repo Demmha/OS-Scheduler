@@ -15,6 +15,6 @@ class Queue:
         return len(self.items)
 
     def Print(self):
-        for i in range (0,len()-1):
+        for i in range (self.size()-1,-1,-1):
             print(self.items[i])
         return
