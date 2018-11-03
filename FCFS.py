@@ -1,7 +1,7 @@
 import numpy as np
 inputfile = raw_input("input file name: ")
 outputfile = raw_input("output file name: ")
-
+Context_Switch_Time = raw_input("Context Switch Time: ")
 with open(inputfile, "r") as input:
     in_arr = input.read().split()
 
@@ -15,7 +15,7 @@ for i in range (0,num):
     process_queue[i][3] = int(in_arr[k+3]) # process priority
     k+=4
 
-#sort the array of processes according to arrival time 
+#sort the array of processes according to arrival time
 process_queue=np.array(sorted(process_queue, key=lambda x: x[1], reverse=False))
 WaitTime=np.zeros(num,dtype=float)
 TurnaroundTime=np.zeros(num,dtype=float)
@@ -26,6 +26,7 @@ for i in range (0,num):
         WaitTime[i]+= process_queue[j][2] # burst time
     if(not(i==0)):  # as first process may not came at t=0 but whenever it come it will serve immediately
         WaitTime[i]-=process_queue[i][1]
+        WaitTime[i]+=Context_Switch_Time
     TurnaroundTime[i]= WaitTime[i]+process_queue[i][2] # wait time+ burst time
     WeightedTurnaroundTime[i]=TurnaroundTime[i]/process_queue[i][2] #turnaroundtime/burst time
 #calculate Average turnaround time of schedule
