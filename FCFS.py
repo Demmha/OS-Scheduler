@@ -25,8 +25,8 @@ for i in range (0,num):
     for j in range(0, i):
         WaitTime[i]+= process_queue[j][2] # burst time
     if(not(i==0)):  # as first process may not came at t=0 but whenever it come it will serve immediately
-        WaitTime[i]-=process_queue[i][1]
-        WaitTime[i]+=Context_Switch_Time
+        WaitTime[i]-=process_queue[i][1]  # remove arrival time
+    WaitTime[i]+=i*Context_Switch_Time
     TurnaroundTime[i]= WaitTime[i]+process_queue[i][2] # wait time+ burst time
     WeightedTurnaroundTime[i]=TurnaroundTime[i]/process_queue[i][2] #turnaroundtime/burst time
 #calculate Average turnaround time of schedule
