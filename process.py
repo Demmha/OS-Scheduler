@@ -4,5 +4,6 @@ class process:
         self.arrival = AT
         self.running = BT
         self.priority = PR
-        self.comp = 0   #completion time
-        self.wait = 0   #wait time
+        self.tat = 0.0 #turnaround time
+        self.wtat = 0.0 #weighted turnaround time
+        self.wait = 0.0   #wait time
