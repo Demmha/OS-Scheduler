@@ -26,6 +26,8 @@ for i in range (0,num):
         #WaitTime[i]+= process_queue[j][2] # burst time
     if (not (i == 0)):   # as first process may not came at t=0 but whenever it come it will serve immediately after Context switching time
         WaitTime[i]=WaitTime[i-1]+process_queue[i-1][2]- process_queue[i][1] #waiting time of previous one and burst time of  it - arrival time of me
+    if (WaitTime[i]<0): # as if a process came and processor was free so it will start immediatly after Context Switching time
+        WaitTime[i]=0
     WaitTime[i]+=Context_Switch_Time
     TurnaroundTime[i]= WaitTime[i]+process_queue[i][2] # wait time+ burst time
     WaitedTurnaroundTime[i]=TurnaroundTime[i]/process_queue[i][2] #turnaroundtime/burst time
@@ -42,7 +44,3 @@ with open(outputfile, "w") as output:
     output.write("Average WaitedTurnaroundTime of Schedule = "+str(AverageWaitedTurnaroundTime)+ '\n ')
     output.close()
 
-# in order to draw Graph
-# Started time of each one will be arrival + waited 
-# Finsished time of each one will be started + brust
-#
