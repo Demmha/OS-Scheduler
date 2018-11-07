@@ -4,6 +4,8 @@ class process:
         self.arrival = AT
         self.running = BT
         self.priority = PR
+        self.copy_running = BT
+        self.copy_arrival = AT
         self.remaining = BT # in order to use it in RR and SRTF
         self.tat = 0.0 #turnaround time
         self.wtat = 0.0 #weighted turnaround time
