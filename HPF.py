@@ -1,73 +1,73 @@
 import numpy as np
 from copy import deepcopy
-
+from process import process
+from print_p import print_p
+from Draw_Graph import Draw_graph
 def update_queue(process_list,process_queue,t): # list hya aslya w ally hy7t feha hya process_queue
 
     for i in range (0,len(process_list)):
-        if (((process_list[i][1])<=t) and (not(process_list[i][1])==-1)):
+        if (((process_list[i].arrival)<=t) and (not(process_list[i].arrival)==-1)):
             process_queue.insert(len(process_queue),deepcopy(process_list[i]))
-            process_list[i][1]=-1 # flag to indicate that this process is already executed or listed
-    process_queue = list((sorted(process_queue, key=lambda x: (x[3]), reverse=True)))
+            process_list[i].arrival=-1 # flag to indicate that this process is already executed or listed
+    process_queue.sort( key=lambda x: (x.priority), reverse=True)
     return(process_queue)
 
-inputfile = raw_input("input file name: ")
-outputfile = raw_input("output file name: ")
-Context_Switch_Time = int(raw_input("Context Switch Time: "))
-with open(inputfile, "r") as input:
-    in_arr = input.read().split()
+def get_data(inputfile,cst):
+    with open(inputfile, "r") as input:
+        in_arr = input.read().split()
+    process_list=list()
+    k=1
+    for i in range (0,len(in_arr)/4):
+        # process id     # process arrival time         # process brust time     # process priority
+        process_list.append(process(int(in_arr[k]),float(in_arr[k+1]),float(in_arr[k+2]), int(in_arr[k+3])))
+        k+=4
+    return process_list
 
-num = int(in_arr[0]) #number of processes
-process_list=list() # process list
-k=1
-for i in range (0,num):
-    # process id     # process arrival time         # process brust time     # process priority
-    process_list.insert(i,[int(in_arr[k]),float(in_arr[k+1]),float(in_arr[k+2]), int(in_arr[k+3])])
-    k+=4
-#sort the array of processes according to arrival time and priority
-process_list=(sorted(process_list, key=lambda x: (-x[1],x[3]), reverse=True))
-# the program always start at arrival time of 1st process
-Current_Time = process_list[0][1]
-StartTime = np.zeros(num) #to keep track of start time of each process
-StartTime[0] = Current_Time
-Current_Process=np.zeros([num,4],dtype=float) # process sequence of execution
-process_queue=list()
+def HPF (process_list,cst):
+    num=len(process_list)
+    #sort the array of processes according to arrival time and priority
+    process_list.sort(key=lambda x: (-x.arrival,x.priority), reverse=True)
+    for elem in process_list:
+        print(elem.pid)
+    # the program always start at arrival time of 1st process
+    Current_Time = process_list[0].arrival
+    print(Current_Time)
+    #StartTime = np.zeros(num) #to keep track of start time of each process
 
-complete = 0
-while complete != num:
-    process_queue= update_queue(process_list, process_queue, Current_Time)
-    if(len(process_queue)==0):
-        Current_Time =  process_list[complete][1]  
-    else:
-        Current_Process.insert(complete, deepcopy(process_queue[0]))
-        process_queue.remove(process_queue[0])
-        StartTime[complete] = Current_Time
-        Current_Time += Current_Process[complete][2]
-        complete += 1
+    Current_Process=list() # process sequence of execution
+    process_queue=list()
+    avg_tat = 0
+    avg_wtat = 0
+    complete = 0
+    while complete != num:
+        process_queue= update_queue(process_list, process_queue, Current_Time)
+        if(len(process_queue)==0):
+            Current_Time =  process_list[complete].arrival
+        else:
+            Current_Process.insert(complete, deepcopy(process_queue[0]))
+            Current_Process[complete].start=Current_Time+cst
+            process_queue.remove(process_queue[0])
+            Current_Time += Current_Process[complete].running+cst
+            Current_Process[complete].finish = Current_Time
 
- # waiting time of each process
-WaitTime=np.zeros(num,dtype=float)
-# Turnaround time of each process
-TurnaroundTime=np.zeros(num,dtype=float)
-# Waitedturnaround time of each process
-WaitedTurnaroundTime=np.zeros(num,dtype=float)
-#calculate Wait time ,turnaround time, weighted turnaround time
-for i in range (0,len(Current_Process)):
-    if (not (i == 0)):  # as first process may not came at t=0 but whenever it come it will serve immediately
-        WaitTime[i] = StartTime[i] - Current_Process[i][1]# wait time = start time - arrival time
-        if WaitTime[i] < 0: #if the current process arrived after the execution of the previous one
-            WaitTime[i] = 0
-    WaitTime[i] += Context_Switch_Time
-    TurnaroundTime[i]= WaitTime[i]+ Current_Process[i][2] # wait time+ burst time
-    WaitedTurnaroundTime[i]=TurnaroundTime[i]/Current_Process[i][2] #turnaroundtime/burst time
-#calculate Average turnaround time of schedule
-AverageTurnaroundTime= np.sum(TurnaroundTime)/num
-#calculate Average weightturnaround time of schedule
-AverageWaitedTurnaroundTime= sum(WaitedTurnaroundTime)/num
+            # calculate Wait time ,turnaround time, weighted turnaround time
+            Current_Process[complete].wait = Current_Process[complete].start - Current_Process[complete].arrival  # wait time = start time - arrival time
+            #if Current_Process[complete].wait < 0:  # if the current process arrived after the execution of the previous one
+                #Current_Process[complete].wait = 0
+            Current_Process[complete].tat = Current_Process[complete].wait + Current_Process[complete].running  # wait time+ burst time
+            Current_Process[complete].wtat = Current_Process[complete].tat / Current_Process[complete].running  # turnaroundtime/burst time
+            avg_tat += Current_Process[complete].tat
+            avg_wtat += Current_Process[complete].wtat
+            complete += 1
+    #calculate Average turnaround time of schedule
+    avg_tat/= num
+    #calculate Average weightturnaround time of schedule
+    avg_wtat/=num
+    for elem in Current_Process:
+        print(elem.pid, elem.start, elem.finish)
+    print_p(Current_Process, avg_tat, avg_wtat, "HPF")
+    return (Current_Process)
 
-with open(outputfile, "w") as output:
-    output.write('ProcessID\tWaitingTime\tTurnaroundTime\tWaitedturnaroundTime\n ')
-    for i in range (0,num):
-        output.write(str(int(Current_Process[i][0]))+' '+str(WaitTime[i])+'  '+str(TurnaroundTime[i])+'  '+str(WaitedTurnaroundTime[i])+ '\n ')
-    output.write("Average TurnaroundTime of Schedule = "+str(AverageTurnaroundTime)+ '\n ')
-    output.write("Average WaitedTurnaroundTime of Schedule = "+str(AverageWaitedTurnaroundTime)+ '\n ')
-    output.close()
+p = get_data("2",1)
+List= HPF(p,1)
+Draw_graph(List)
