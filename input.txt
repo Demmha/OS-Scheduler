@@ -2,3 +2,13 @@
 9.5 2.4
 12 6.3
 8.9
+
+
+#TO DO List:
+#1- make sure of FCFS 
+#2- make sure of SRTF
+#3- make sure of cst in all
+#4- make sure of tie conditions
+#5- think of graph and do it
+#6- function that read the input file and return pList
+#7- add start time to process

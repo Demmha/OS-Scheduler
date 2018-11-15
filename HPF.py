@@ -12,17 +12,6 @@ def update_queue(process_list,process_queue,t): # list hya aslya w ally hy7t feh
     process_queue.sort( key=lambda x: (x.priority), reverse=True)
     return(process_queue)
 
-def get_data(inputfile,cst):
-    with open(inputfile, "r") as input:
-        in_arr = input.read().split()
-    process_list=list()
-    k=1
-    for i in range (0,len(in_arr)/4):
-        # process id     # process arrival time         # process brust time     # process priority
-        process_list.append(process(int(in_arr[k]),float(in_arr[k+1]),float(in_arr[k+2]), int(in_arr[k+3])))
-        k+=4
-    return process_list
-
 def HPF (process_list,cst):
     num=len(process_list)
     #sort the array of processes according to arrival time and priority
@@ -32,7 +21,6 @@ def HPF (process_list,cst):
     # the program always start at arrival time of 1st process
     Current_Time = process_list[0].arrival
     print(Current_Time)
-    #StartTime = np.zeros(num) #to keep track of start time of each process
 
     Current_Process=list() # process sequence of execution
     process_queue=list()
@@ -52,8 +40,6 @@ def HPF (process_list,cst):
 
             # calculate Wait time ,turnaround time, weighted turnaround time
             Current_Process[complete].wait = Current_Process[complete].start - Current_Process[complete].arrival  # wait time = start time - arrival time
-            #if Current_Process[complete].wait < 0:  # if the current process arrived after the execution of the previous one
-                #Current_Process[complete].wait = 0
             Current_Process[complete].tat = Current_Process[complete].wait + Current_Process[complete].running  # wait time+ burst time
             Current_Process[complete].wtat = Current_Process[complete].tat / Current_Process[complete].running  # turnaroundtime/burst time
             avg_tat += Current_Process[complete].tat

@@ -1,7 +1,6 @@
-
 import matplotlib.pyplot as plt
 from process import process
-# x-coordinates of left sides of bars
+
 def Draw_graph (process_list):
         S_T=list()
         D_T=list()
@@ -12,7 +11,7 @@ def Draw_graph (process_list):
                 D_T.append((elem.finish-elem.start))
         # plotting a bar chart
         plt.bar(S_T, I_D,
-                width = D_T, color = ['red', 'blue'])
+                width = D_T, color = ['red', 'blue'], align="edge")
 
         # naming the x-axis
         plt.xlabel(' Time ')
@@ -23,5 +22,3 @@ def Draw_graph (process_list):
 
         # function to show the plot
         plt.show()
-
-
