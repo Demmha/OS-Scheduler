@@ -1,6 +1,5 @@
 from process import process
 from print_p import print_p
-from Draw_Graph import Draw_graph
 
 def FCFS(process_queue,cst):
     num= len(process_queue)
@@ -26,7 +25,3 @@ def FCFS(process_queue,cst):
 
     print_p(process_queue, avg_tat, avg_wtat, "FCFS")
     return process_queue
-
-p = get_data("3",1)
-List = FCFS(p,1)
-Draw_graph(List)

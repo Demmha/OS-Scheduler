@@ -37,7 +37,8 @@ def RR(pList, qt, cst):
             first = 1
                 
         if len(readyQ) == 0:
-            time = pList[complete].copy_arrival
+            if time < pList[complete].copy_arrival:
+                time = pList[complete].copy_arrival
             update_readyQ(pList, readyQ, time)
             time += cst
             

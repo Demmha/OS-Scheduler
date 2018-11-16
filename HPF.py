@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 from process import process
 from print_p import print_p
-from Draw_Graph import Draw_graph
+
 def update_queue(process_list,process_queue,t): # list hya aslya w ally hy7t feha hya process_queue
 
     for i in range (0,len(process_list)):
@@ -53,7 +53,3 @@ def HPF (process_list,cst):
         print(elem.pid, elem.start, elem.finish)
     print_p(Current_Process, avg_tat, avg_wtat, "HPF")
     return (Current_Process)
-
-p = get_data("2",1)
-List= HPF(p,1)
-Draw_graph(List)
