@@ -76,24 +76,3 @@ def RR(pList, qt, cst):
     
     print_p(pList, avg_tat, avg_wtat, "RR")
     return chart
-"""
-pList = []
-
-pList.append(process(1, 0, 4, 0))
-pList.append(process(2, 1, 5, 0))
-pList.append(process(3, 2, 2, 0))
-pList.append(process(4, 3, 1, 0))
-pList.append(process(5, 4, 6, 0))
-"""
-pList = []
-
-pList.append(process(1, 5, 1, 1))
-pList.append(process(2, 7, 2, 1))
-pList.append(process(3, 8.5, 11.1, 13))
-pList.append(process(4, 10.6, 8.6, 8))
-pList.append(process(5, 12.2, 10.5, 11))
-pList.append(process(6, 12.4, 20.4, 10))
-
-List = RR(pList, 1, 0.1)
-
-Draw_graph(List)
