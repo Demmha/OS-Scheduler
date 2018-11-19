@@ -40,9 +40,7 @@ def SRTF(process_list,cst):
     step=0.0001
     #assume in this algorithm check every 1 min
     while complete != num :
-        #print("at time = "+str(Current_Time))
         process_queue = update_queue(process_list,process_queue,Current_Time)
-        #print("p" +str(process_queue[0].pid))
         if len(process_queue)>0 :
             if process_queue[0].pid != l_id : # check if process changed or not
                 Current_Time+= cst
@@ -55,11 +53,11 @@ def SRTF(process_list,cst):
 
             process_queue[0].remaining-=step
             if (process_queue[0].remaining <=0):
-                f_t[process_queue[0].pid] = Current_Time+1
+                f_t[process_queue[0].pid] = Current_Time+step
                 complete+=1
                 process_queue.remove(process_queue[0])
 
-            Current_Process[len(Current_Process)-1].finish = Current_Time+1
+            Current_Process[len(Current_Process)-1].finish = Current_Time+step
         Current_Time+=step
 
     avg_tat=0
