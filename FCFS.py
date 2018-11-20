@@ -23,5 +23,8 @@ def FCFS(process_queue,cst):
         avg_tat += process_queue[i].tat
         avg_wtat += process_queue[i].wtat
 
+    avg_tat /= float(num)
+    avg_wtat /= float(num)
+    
     print_p(process_queue, avg_tat, avg_wtat, "FCFS")
     return process_queue
