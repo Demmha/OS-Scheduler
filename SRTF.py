@@ -68,8 +68,8 @@ def SRTF(process_list, cst):
     avg_tat = 0
     avg_wtat = 0
     for i in range(0, len(process_list)):
-        process_list[i].wait = s_t[process_list[i].pid] - process_list[i].copy_arrival #wait time = start time - arrival
-        process_list[i].tat = process_list[i].wait + process_list[i].running #tat = wait time + burst time
+        process_list[i].tat = f_t[process_list[i].pid] - process_list[i].copy_arrival #tat = comp time - arrival
+        process_list[i].wait = process_list[i].tat - process_list[i].running #wait = tat - burst
         process_list[i].wtat = process_list[i].tat / process_list[i].running  # turnaroundtime/burst time
         avg_tat += process_list[i].tat
         avg_wtat += process_list[i].wtat

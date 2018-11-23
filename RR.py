@@ -1,7 +1,5 @@
 from process import process
 from print_p import print_p
-from Draw_Graph import Draw_graph
-
 
 class pRR:
     def __init__(self, pid, ST, FT):
