@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 from process import process
 from print_p import print_p
-from Draw_Graph import Draw_graph
+
 def update_queue(process_list,process_queue,t): # list hya aslya w ally hy7t feha hya process_queue
     for i in range (0,len(process_list)):
         if (((process_list[i].arrival)<=t) and (not(process_list[i].arrival)==-1)):
@@ -11,16 +11,6 @@ def update_queue(process_list,process_queue,t): # list hya aslya w ally hy7t feh
     process_queue.sort(key=lambda x: (x.remaining), reverse=False)
     return(process_queue)
 
-def get_data(inputfile,cst):
-    with open(inputfile, "r") as input:
-        in_arr = input.read().split()
-    process_list=list()
-    k=1
-    for i in range (0,len(in_arr)/4):
-        # process id     # process arrival time         # process brust time     # process priority
-        process_list.append(process(int(in_arr[k]),float(in_arr[k+1]),float(in_arr[k+2]), int(in_arr[k+3])))
-        k+=4
-    return (process_list)
 
 def SRTF(process_list,cst):
     num=len(process_list)
@@ -63,8 +53,8 @@ def SRTF(process_list,cst):
     avg_tat=0
     avg_wtat=0
     for i in range (0,len(process_list)) :
-        process_list[i].wait = f_t[process_list[i].pid] - s_t[process_list[i].pid]  # start - finish
-        process_list[i].tat= process_list[i].wait+ process_list[i].running # wait time+ burst time
+        process_list[i].tat = f_t[process_list[i].pid] - process_list[i].arrival  # wait time = start time - arrival
+        process_list[i].wait = process_list[i].tat - process_list[i].running  # tat = wait time + brust
         process_list[i].wtat= process_list[i].tat/ process_list[i].running #turnaroundtime/burst time
         avg_tat+=process_list[i].tat
         avg_wtat+=process_list[i].wtat

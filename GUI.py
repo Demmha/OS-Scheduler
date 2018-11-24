@@ -1,5 +1,4 @@
-
-import Tkinter
+import tkinter
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from tkinter import messagebox
@@ -8,6 +7,7 @@ from HPF import HPF
 from FCFS import FCFS
 from RR import RR
 from SRTF import SRTF
+
 
 def check(*args):
 
@@ -63,63 +63,63 @@ class App:
 
 
     def __init__(self, master):
-        # Create a container
         self.first=True
         self.master=master
-        self.frame = Tkinter.Frame(master)
+        self.frame = tkinter.Frame(master)
 
-        self.L1 = Tkinter.Label(self.master, pady=10, text="Input File Name").pack()
+        self.L1 = tkinter.Label(self.master, pady=10, text="Input File Name").pack()
 
-        self.filename = Tkinter.StringVar()
-        self.E1 = Tkinter.Entry(self.master, textvariable=self.filename).pack()
+        self.filename = tkinter.StringVar()
+        self.E1 = tkinter.Entry(self.master, textvariable=self.filename).pack()
+        #self.filename = filedialog.askopenfilename(initialdir="C:/Users", title="choose your file",filetypes=(("txt files", "*.txt"), ("all files", "*.*")))
         global v
-        self.L2 = Tkinter.Label(self.master, pady=10, text="Context Switching Time").pack()
-        self.t1 = Tkinter.StringVar()
-        self.E2 = Tkinter.Entry(self.master, textvariable=self.t1).pack()
-        self.L3 = Tkinter.Label(self.master, pady=10, text="Choose Algorithm").pack()
-        v=Tkinter.IntVar()
-        Tkinter.Radiobutton(self.frame,
+        self.L2 = tkinter.Label(self.master, pady=10, text="Context Switching Time").pack()
+        self.t1 = tkinter.StringVar()
+        self.E2 = tkinter.Entry(self.master, textvariable=self.t1).pack()
+        self.L3 = tkinter.Label(self.master, pady=10, text="Choose Algorithm").pack()
+        v=tkinter.IntVar()
+        tkinter.Radiobutton(self.frame,
                     text="HPF",
                     padx=10,
                     variable=v,
-                    value=1).pack(side=Tkinter.LEFT)
-        Tkinter.Radiobutton(self.frame,
+                    value=1).pack(side=tkinter.LEFT)
+        tkinter.Radiobutton(self.frame,
                     text="FCFS",
                     padx=10,
                     variable=v,
-                    value=2).pack(side=Tkinter.LEFT)
-        Tkinter.Radiobutton(self.frame,
+                    value=2).pack(side=tkinter.LEFT)
+        tkinter.Radiobutton(self.frame,
                     text="RR",
                     padx=10,
                     variable=v,
-                    value=3).pack(side=Tkinter.LEFT)
-        Tkinter.Radiobutton(self.frame,
+                    value=3).pack(side=tkinter.LEFT)
+        tkinter.Radiobutton(self.frame,
                     text="SRTF",
                     padx=10,
                     variable=v,
-                    value=4).pack(side=Tkinter.LEFT)
+                    value=4).pack(side=tkinter.LEFT)
 
         v.trace('w', check)
         global E4,L4, t2
-        self.frame2 = Tkinter.Frame(master)
-        self.t2 = Tkinter.StringVar()
-        L4 = Tkinter.Label(self.frame2, pady=10, text="Time Quantum")
-        E4 = Tkinter.Entry(self.frame2, textvariable=self.t2)
-        self.b1 = Tkinter.Button(self.frame2,relief= Tkinter.GROOVE, text="DONE", padx=10, command=self.run).pack(side=Tkinter.BOTTOM)
+        self.frame2 = tkinter.Frame(master)
+        self.t2 = tkinter.StringVar()
+        L4 = tkinter.Label(self.frame2, pady=10, text="Time Quantum")
+        E4 = tkinter.Entry(self.frame2, textvariable=self.t2)
+        self.b1 = tkinter.Button(self.frame2,relief= tkinter.GROOVE, text="DONE", padx=10, command=self.run).pack(side=tkinter.BOTTOM)
         self.frame.pack()
         self.frame2.pack()
 
 
     def Draw(self,S_T,D_T,I_D):
         window.geometry("800x600")
-        fig = Figure(figsize=(5, 4),dpi=100,edgecolor='blue')
+        fig = Figure(figsize=(5, 4),dpi=100, edgecolor='purple')
         self.subplot1 = fig.add_subplot(111)
-        self.subplot1.set_title(" graph")
+        self.subplot1.set_title(" Schedular graph")
         self.subplot1.set_xlabel(" Time")
         self.subplot1.set_ylabel(" Process_ID")
-        self.subplot1.bar(S_T, I_D,width=D_T, color=('purple'), align="edge")
+        self.subplot1.bar(S_T, I_D,width=D_T, edgecolor=('purple'), align="edge")
         self.canvas = FigureCanvasTkAgg(fig,master=self.master)
-        self.canvas.show()
+        #self.canvas.show()
         self.canvas.get_tk_widget().pack(side='right', fill='both', expand=1)
         self.first=False
 
@@ -135,11 +135,14 @@ class App:
            self.Draw(S_T,D_T,I_D)
         else:
             self.subplot1.clear()
-            self.subplot1.bar(S_T, I_D, width=D_T, color=('blue'), align="edge")
+            self.subplot1.set_title(" Scheduler graph")
+            self.subplot1.set_xlabel(" Time")
+            self.subplot1.set_ylabel(" Process_ID")
+            self.subplot1.bar(S_T, I_D, width=D_T, edgecolor=('purple'), align="edge")
             self.canvas.draw()
 
 
-window = Tkinter.Tk()
+window = tkinter.Tk()
 window.title("Os scheduler")
 window.geometry("300x300")
 app = App(window)

@@ -1,4 +1,3 @@
-import numpy as np
 from copy import deepcopy
 from process import process
 from print_p import print_p
@@ -24,17 +23,17 @@ def HPF (process_list,cst):
     avg_tat = 0
     avg_wtat = 0
     complete = 0
+    step = 0.0001
     while complete != num:
         process_queue= update_queue(process_list, process_queue, Current_Time)
         if(len(process_queue)==0):
-            Current_Time =  process_list[complete].arrival
+            Current_Time += step
         else:
             Current_Process.insert(complete, deepcopy(process_queue[0]))
             Current_Process[complete].start=Current_Time+cst
             process_queue.remove(process_queue[0])
             Current_Time += Current_Process[complete].running+cst
             Current_Process[complete].finish = Current_Time
-
             # calculate Wait time ,turnaround time, weighted turnaround time
             Current_Process[complete].wait = Current_Process[complete].start - Current_Process[complete].arrival  # wait time = start time - arrival time
             Current_Process[complete].tat = Current_Process[complete].wait + Current_Process[complete].running  # wait time+ burst time

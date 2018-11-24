@@ -15,7 +15,7 @@ mean_burst = float(inp_arr[3])
 sigma_burst = float(inp_arr[4])
 mean_prior = float(inp_arr[5])
 
-with open(outputfile, "w") as outp:
+with open(outputfile + ".txt", "w") as outp:
     outp.write(str(num))
     outp.write('\n')
     for i in range (0, num):
