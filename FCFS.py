@@ -30,16 +30,16 @@ def FCFS(process_list,cst):
             process_queue[i].start = Current_Time
             if process_queue[i-1].finish < process_queue[i].arrival :
                 process_queue[i].start = process_queue[i].arrival
-	        process_queue[i].start += cst
-	        process_queue[i].finish=process_queue[i].start+process_queue[i].running
-	        process_queue[i].wait=process_queue[i].start-process_queue[i].arrival
-	        process_queue[i].tat = process_queue[i].wait + process_queue[i].running  # wait time+ burst time
-	        process_queue[i].wtat = process_queue[i].tat / process_queue[i].running  # turnaroundtime/burst time
-	        avg_tat += process_queue[i].tat
-	        avg_wtat += process_queue[i].wtat
-	        Current_Time = process_queue[i].finish
-	        lst_id = process_queue[i].pid
-	        i+=1
+            process_queue[i].start += cst
+            process_queue[i].finish=process_queue[i].start+process_queue[i].running
+            process_queue[i].wait=process_queue[i].start-process_queue[i].arrival
+            process_queue[i].tat = process_queue[i].wait + process_queue[i].running  # wait time+ burst time
+            process_queue[i].wtat = process_queue[i].tat / process_queue[i].running  # turnaroundtime/burst time
+            avg_tat += process_queue[i].tat
+            avg_wtat += process_queue[i].wtat
+            Current_Time = process_queue[i].finish
+            lst_id = process_queue[i].pid
+            i+=1
     avg_tat /= float(num)
     avg_wtat /= float(num)
     

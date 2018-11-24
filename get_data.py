@@ -1,8 +1,7 @@
 from process import process
 
-
 def get_data(inputfile):
-
+    
     process_list = list()
     # read input file
     with open(inputfile, "r") as inp:
@@ -16,5 +15,5 @@ def get_data(inputfile):
             burst_time = parameters[2]
             priority = int(parameters[3])
             process_list.append(process(pid, arrival_time, burst_time, priority))
-
+                
     return process_list
