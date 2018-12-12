@@ -25,10 +25,10 @@ def SRTF(process_list,cst):
     complete=0
     i=0
     l_id=0
-    s_t = np.array([-1 for i in range (0,num+1)])
-    f_t = np.array([0 for i in range (0,num+1)])
+    s_t = np.array([-1.0 for i in range (0,num+1)])
+    f_t = np.array([0.0 for i in range (0,num+1)])
     step=0.0001
-    #assume in this algorithm check every 1 min
+    #assume in this algorithm check every 1 unit time
     while complete != num :
         process_queue = update_queue(process_list,process_queue,Current_Time)
         if len(process_queue)>0 :
@@ -50,10 +50,10 @@ def SRTF(process_list,cst):
             Current_Process[len(Current_Process)-1].finish = Current_Time+step
         Current_Time+=step
 
-    avg_tat=0
-    avg_wtat=0
+    avg_tat=0.0
+    avg_wtat=0.0
     for i in range (0,len(process_list)) :
-        process_list[i].tat = f_t[process_list[i].pid] - process_list[i].arrival  # wait time = start time - arrival
+        process_list[i].tat = f_t[process_list[i].pid] - process_list[i].copy_arrival
         process_list[i].wait = process_list[i].tat - process_list[i].running  # tat = wait time + brust
         process_list[i].wtat= process_list[i].tat/ process_list[i].running #turnaroundtime/burst time
         avg_tat+=process_list[i].tat
